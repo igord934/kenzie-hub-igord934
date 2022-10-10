@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Api from "../../services/Api";
 
-function Register({ navigate, filter, setFilter }) {
+function Register({ navigate, filter, setFilter, toast }) {
   useEffect(() => {
     const token = window.localStorage.getItem("@TOKEN");
     token && setFilter("");
