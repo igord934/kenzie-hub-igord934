@@ -1,8 +1,6 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+import { createGlobalStyle } from "styled-components";
 
+export const Global = createGlobalStyle`
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 html,
@@ -93,7 +91,7 @@ video {
   font-family: "Inter", sans-serif;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+
 article,
 aside,
 details,
@@ -135,3 +133,24 @@ table {
   border-spacing: 0;
   font-family: "Inter", sans-serif;
 }
+
+
+:root {
+  --primary: #ff577f;
+  --primary-focus: #ff427f;
+  --primary-negative: #59323f;
+
+  --grey-0: #f8f9fa;
+  --grey-1: #868e96;
+  --grey-2: #343b41;
+  --grey-3: #212529;
+  --grey-4: #121214;
+
+  --sucess: #3fe864;
+  --negative: #e83f5b;
+
+  --text-color: #fff;
+
+  --background: #000;
+}
+`;

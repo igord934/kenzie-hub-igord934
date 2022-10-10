@@ -4,6 +4,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Api from "../../services/Api";
+import { Button } from "../../style/Button";
+import { Logo, Title } from "../../style/Typograph";
 
 function Register({ navigate, filter, setFilter, toast }) {
   useEffect(() => {
@@ -61,13 +63,13 @@ function Register({ navigate, filter, setFilter, toast }) {
   return (
     <Container>
       <div className="header">
-        <h1 className="logo">Kenzie Hub</h1>
-        <button onClick={() => setFilter("login")} className="button darkGrey">
+        <Logo>Kenzie Hub</Logo>
+        <Button onClick={() => setFilter("login")} typeName="darkGrey">
           Voltar
-        </button>
+        </Button>
       </div>
       <Form onSubmit={handleSubmit(onSubmitFunction)}>
-        <h2 className="titleBig">Registro</h2>
+        <Title typeName="big">Registro</Title>
         <label>
           <span>Email</span>
           <div className="containerForm">
@@ -153,13 +155,9 @@ function Register({ navigate, filter, setFilter, toast }) {
             </select>
           </div>
         </label>
-        <button
-          className={
-            !objetoVazio(errors) ? "button negative" : "button primary"
-          }
-        >
+        <Button typeName={!objetoVazio(errors) ? "negative" : "primary"}>
           Cadastrar
-        </button>
+        </Button>
       </Form>
     </Container>
   );

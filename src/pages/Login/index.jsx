@@ -5,6 +5,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Api from "../../services/Api";
+import { Button } from "../../style/Button";
+import { Logo, Headline, Title } from "../../style/Typograph";
 
 function Login({ navigate, filter, setFilter, toast }) {
   const [password, setPassword] = useState(false);
@@ -42,9 +44,9 @@ function Login({ navigate, filter, setFilter, toast }) {
 
   return (
     <Container>
-      <h1 className="logo">Kenzie Hub</h1>
+      <Logo>Kenzie Hub</Logo>
       <Form onSubmit={handleSubmit(onSubmitFunction)}>
-        <h2 className="titleBig">Login</h2>
+        <Title typeName="big">Login</Title>
         <label>
           <span>Email</span>
           <div className="containerForm">
@@ -72,16 +74,16 @@ function Login({ navigate, filter, setFilter, toast }) {
           </div>
           <p>{errors.password?.message}</p>
         </label>
-        <button className="button primary">Entrar</button>
+        <Button typeName="primary">Entrar</Button>
         <div className="toRegister">
-          <span className="headline bold">Ainda não possui uma conta?</span>
-          <button
+          <Headline typeName="bold">Ainda não possui uma conta?</Headline>
+          <Button
             type="button"
-            className="button Grey"
+            typeName="grey"
             onClick={() => setFilter("register")}
           >
             Cadastre-se
-          </button>
+          </Button>
         </div>
       </Form>
     </Container>

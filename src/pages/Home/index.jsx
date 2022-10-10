@@ -1,38 +1,62 @@
 import { useEffect, useState } from "react";
 import Api from "../../services/Api";
-import { Container } from "./style";
+import { Button } from "../../style/Button";
+import { Headline, Logo, Title } from "../../style/Typograph";
+import { Container, Loading } from "./style";
 
 function Home({ navigate, filter, setFilter }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState("");
+  const [loading, setloading] = useState(true);
+
   useEffect(() => {
     const token = window.localStorage.getItem("@TOKEN");
     !token && setFilter("login");
     navigate(`/${filter}`);
-    Api.get(`/profile`)
-      .then((resp) => resp.data)
-      .then((resp) => {
-        console.log(resp);
-        setUser(resp);
-      })
-      .catch((err) => console.log(err));
+    (Api.defaults.headers.Authorization = `Bearer ${token}`),
+      Api.get(`/profile`)
+        .then((resp) => resp.data)
+        .then((resp) => {
+          setUser(resp);
+          setloading(false);
+        })
+        .catch((err) => console.log(err));
   }, []);
+
   function logout() {
     window.localStorage.removeItem("@TOKEN");
     window.localStorage.removeItem("@USERID");
     setFilter("login");
   }
+
+  if (loading) {
+    return (
+      <Loading>
+        <div class="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </Loading>
+    );
+  }
+
   return (
     <Container>
       <div className="header">
-        <h1 className="logo">Kenzie Hub</h1>
-        <button className="button darkGrey" onClick={logout}>
+        <Logo>Kenzie Hub</Logo>
+        <Button typeName="darkGrey" onClick={logout}>
           Sair
-        </button>
+        </Button>
       </div>
       <div className="infos">
         <div>
-          <h2 className="titleBig">Olá, {user.name}</h2>
-          <span className="headline">{user.course_module}</span>
+          <Title typeName="big">Olá, {user.name}</Title>
+          <Headline>{user.course_module}</Headline>
         </div>
       </div>
       <div className="posts">
