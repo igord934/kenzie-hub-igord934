@@ -1,14 +1,15 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 export const Button = styled.button`
   border-style: none;
+  font-size: 0.875rem;
   border-radius: 4px;
   padding: 11px 22px;
   color: var(--text-color);
   cursor: pointer;
 
   ${(props) => {
-    console.log(props.typeName == "primary");
     if (props.typeName == "primary") {
       return css`
         background-color: var(--primary);
@@ -36,6 +37,22 @@ export const Button = styled.button`
       `;
     }
   }}
+`;
+
+export const LinkButton = styled(Link)`
+  text-align: center;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  border-style: none;
+  border-radius: 4px;
+  padding: 11px 22px;
+  color: var(--text-color);
+  cursor: pointer;
+  background-color: var(--grey-1);
+  &:hover {
+    background-color: var(--grey-2);
+  }
 `;
 
 // .button {

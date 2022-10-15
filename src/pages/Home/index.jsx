@@ -1,73 +1,49 @@
-import { useEffect, useState } from "react";
-import Api from "../../services/Api";
+import { useContext } from "react";
+import Loading from "../../components/Loading";
+import { UserContext } from "../../context/UserContext";
 import { Button } from "../../style/Button";
 import { Headline, Logo, Title } from "../../style/Typograph";
-import { Container, Loading } from "./style";
+import { Container } from "./style";
 
-function Home({ navigate, filter, setFilter }) {
-  const [user, setUser] = useState("");
-  const [loading, setloading] = useState(true);
-
-  useEffect(() => {
-    const token = window.localStorage.getItem("@TOKEN");
-    !token && setFilter("login");
-    navigate(`/${filter}`);
-    (Api.defaults.headers.Authorization = `Bearer ${token}`),
-      Api.get(`/profile`)
-        .then((resp) => resp.data)
-        .then((resp) => {
-          setUser(resp);
-          setloading(false);
-        })
-        .catch((err) => console.log(err));
-  }, []);
+function Home() {
+  const { user, setUser, loading } = useContext(UserContext);
 
   function logout() {
     window.localStorage.removeItem("@TOKEN");
     window.localStorage.removeItem("@USERID");
-    setFilter("login");
+    setUser(null);
   }
 
   if (loading) {
-    return (
-      <Loading>
-        <div class="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </Loading>
-    );
+    return <Loading />;
   }
 
   return (
-    <Container>
-      <div className="header">
-        <Logo>Kenzie Hub</Logo>
-        <Button typeName="darkGrey" onClick={logout}>
-          Sair
-        </Button>
-      </div>
-      <div className="infos">
-        <div>
-          <Title typeName="big">Olá, {user.name}</Title>
-          <Headline>{user.course_module}</Headline>
+    user && (
+      <Container>
+        <div className="header">
+          <Logo>Kenzie Hub</Logo>
+          <Button typeName="darkGrey" onClick={logout}>
+            Sair
+          </Button>
         </div>
-      </div>
-      <div className="posts">
-        <div>
-          <h2>Que pena! Estamos em desenvolvimento :(</h2>
-          <p>
-            Nossa aplicação está em desenvolvimento, em breve teremos novidades
-          </p>
+        <div className="infos">
+          <div>
+            <Title typeName="big">Olá, {user.name}</Title>
+            <Headline>{user.course_module}</Headline>
+          </div>
         </div>
-      </div>
-    </Container>
+        <div className="posts">
+          <div>
+            <h2>Que pena! Estamos em desenvolvimento :(</h2>
+            <p>
+              Nossa aplicação está em desenvolvimento, em breve teremos
+              novidades
+            </p>
+          </div>
+        </div>
+      </Container>
+    )
   );
 }
 

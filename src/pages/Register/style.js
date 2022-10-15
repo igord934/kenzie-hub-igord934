@@ -65,7 +65,8 @@ export const Form = styled.form`
       color: var(--grey-1);
     }
   }
-  button {
+  button,
+  a {
     width: 100%;
   }
   .toRegister {

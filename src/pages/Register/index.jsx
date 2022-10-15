@@ -1,18 +1,12 @@
-import { useEffect } from "react";
 import { Container, Form } from "./style";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Api from "../../services/Api";
-import { Button } from "../../style/Button";
+import { Button, LinkButton as Link } from "../../style/Button";
 import { Logo, Title } from "../../style/Typograph";
 
-function Register({ navigate, filter, setFilter, toast }) {
-  useEffect(() => {
-    const token = window.localStorage.getItem("@TOKEN");
-    token && setFilter("");
-    navigate(`/${filter}`);
-  }, []);
+function Register({ navigate, toast }) {
   const formSchema = yup.object().shape({
     email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
     password: yup
@@ -64,9 +58,7 @@ function Register({ navigate, filter, setFilter, toast }) {
     <Container>
       <div className="header">
         <Logo>Kenzie Hub</Logo>
-        <Button onClick={() => setFilter("login")} typeName="darkGrey">
-          Voltar
-        </Button>
+        <Link to={"/login"}>Voltar</Link>
       </div>
       <Form onSubmit={handleSubmit(onSubmitFunction)}>
         <Title typeName="big">Registro</Title>

@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Container, Form } from "./style";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Api from "../../services/Api";
-import { Button } from "../../style/Button";
+import { Button, LinkButton as Link } from "../../style/Button";
 import { Logo, Headline, Title } from "../../style/Typograph";
+import { UserContext } from "../../context/UserContext";
+import Loading from "../../components/Loading";
 
-function Login({ navigate, filter, setFilter, toast }) {
-  const [password, setPassword] = useState(false);
-  useEffect(() => {
-    const token = window.localStorage.getItem("@TOKEN");
-    token && setFilter("");
-    navigate(`/${filter}`);
-  }, []);
+function Login({ navigate, toast }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { loading, setLoading } = useContext(UserContext);
 
   const formSchema = yup.object().shape({
     email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
@@ -28,20 +27,24 @@ function Login({ navigate, filter, setFilter, toast }) {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-  const onSubmitFunction = (data) => {
-    Api.post("/sessions", data)
-      .then((resp) => resp.data)
-      .then((resp) => {
-        window.localStorage.setItem("@TOKEN", resp.token);
-        window.localStorage.setItem("@USERID", resp.user.id);
-        toast.success("Você logou, estamos te redirecionando!");
-        setTimeout(() => {
-          setFilter("");
-        }, 3000);
-      })
-      .catch((err) => toast.error(err.response.data.message));
-  };
 
+  const onSubmitFunction = async (dataForm) => {
+    try {
+      const { data } = await Api.post("/sessions", dataForm);
+
+      window.localStorage.setItem("@TOKEN", data.token);
+      window.localStorage.setItem("@USERID", data.user.id);
+
+      setLoading(true);
+
+      toast.success("Login realizado com sucesso!");
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Container>
       <Logo>Kenzie Hub</Logo>
@@ -62,14 +65,14 @@ function Login({ navigate, filter, setFilter, toast }) {
           <span>Senha</span>
           <div className="containerForm">
             <input
-              type={password ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Digite sua senha..."
               {...register("password")}
             />
-            {password ? (
-              <FaEyeSlash onClick={() => setPassword(false)} />
+            {showPassword ? (
+              <FaEyeSlash onClick={() => setShowPassword(false)} />
             ) : (
-              <FaEye onClick={() => setPassword(true)} />
+              <FaEye onClick={() => setShowPassword(true)} />
             )}
           </div>
           <p>{errors.password?.message}</p>
@@ -77,13 +80,9 @@ function Login({ navigate, filter, setFilter, toast }) {
         <Button typeName="primary">Entrar</Button>
         <div className="toRegister">
           <Headline typeName="bold">Ainda não possui uma conta?</Headline>
-          <Button
-            type="button"
-            typeName="grey"
-            onClick={() => setFilter("register")}
-          >
+          <Link type="button" to={"/register"}>
             Cadastre-se
-          </Button>
+          </Link>
         </div>
       </Form>
     </Container>

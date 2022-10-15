@@ -8,11 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [filter, setFilter] = useState("login");
   const navigate = useNavigate();
-  useEffect(() => {
-    navigate(`/${filter}`);
-  }, [filter]);
+
   return (
     <div className="App">
       <ToastContainer
@@ -28,38 +25,14 @@ function App() {
         theme="dark"
       />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              navigate={navigate}
-              filter={filter}
-              setFilter={setFilter}
-              toast={toast}
-            />
-          }
-        />
+        <Route path="/" element={<Home navigate={navigate} toast={toast} />} />
         <Route
           path="/login"
-          element={
-            <Login
-              navigate={navigate}
-              filter={filter}
-              setFilter={setFilter}
-              toast={toast}
-            />
-          }
+          element={<Login navigate={navigate} toast={toast} />}
         />
         <Route
           path="/register"
-          element={
-            <Register
-              navigate={navigate}
-              filter={filter}
-              setFilter={setFilter}
-              toast={toast}
-            />
-          }
+          element={<Register navigate={navigate} toast={toast} />}
         />
       </Routes>
     </div>
