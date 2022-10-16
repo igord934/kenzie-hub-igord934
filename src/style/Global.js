@@ -152,5 +152,6 @@ table {
   --text-color: #fff;
 
   --background: #000;
+  --background-transparent: #00000080;
 }
 `;

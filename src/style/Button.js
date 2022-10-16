@@ -8,6 +8,7 @@ export const Button = styled.button`
   padding: 11px 22px;
   color: var(--text-color);
   cursor: pointer;
+  transition: 0.5s;
 
   ${(props) => {
     if (props.typeName == "primary") {
@@ -55,6 +56,22 @@ export const LinkButton = styled(Link)`
   }
 `;
 
+export const AddButton = styled.button`
+  text-align: center;
+  font-size: 1rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  border-style: none;
+  border-radius: 4px;
+  height: 32px;
+  width: 32px;
+  color: var(--text-color);
+  cursor: pointer;
+  background-color: var(--grey-3);
+  &:hover {
+    background-color: var(--grey-2);
+  }
+`;
 // .button {
 
 //   }

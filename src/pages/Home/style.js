@@ -47,13 +47,13 @@ export const Container = styled.div`
       }
     }
   }
-  .posts {
+  .techs {
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    div {
+    /* div {
       width: 90%;
       padding: 35px 0;
       flex-direction: column;
@@ -61,10 +61,7 @@ export const Container = styled.div`
       gap: 16px;
       max-width: 1200px;
       box-sizing: border-box;
-      display: none;
-      @media (min-width: 769px) {
-        display: flex;
-      }
-    }
+      display: flex;
+    } */
   }
 `;

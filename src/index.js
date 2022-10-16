@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Global } from "./style/Global";
 import { UserContext, UserProvider } from "./context/UserContext";
+import { TechProvider } from "./context/TechContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <Global />
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <TechProvider>
+          <App />
+        </TechProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

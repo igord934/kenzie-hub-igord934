@@ -10,7 +10,7 @@ import { Logo, Headline, Title } from "../../style/Typograph";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../components/Loading";
 
-function Login({ navigate, toast }) {
+function Login({ toast }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const { loading, setLoading } = useContext(UserContext);
@@ -32,12 +32,12 @@ function Login({ navigate, toast }) {
     try {
       const { data } = await Api.post("/sessions", dataForm);
 
+      toast.success("Login realizado com sucesso!");
+
       window.localStorage.setItem("@TOKEN", data.token);
       window.localStorage.setItem("@USERID", data.user.id);
 
       setLoading(true);
-
-      toast.success("Login realizado com sucesso!");
     } catch (err) {
       toast.error(err.response.data.message);
     }

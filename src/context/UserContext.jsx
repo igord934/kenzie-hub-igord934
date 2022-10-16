@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loading from "../components/Loading";
 import Api from "../services/Api";
 
@@ -19,8 +20,10 @@ export function UserProvider({ children }) {
           const { data } = await Api.get(`/profile`);
           setUser(data);
           navigate(`/`);
-        } catch (err) {
-          console.log(err);
+        } catch ({ message }) {
+          toast.error("Usuario não encontrado, conecte novamente");
+          window.localStorage.clear();
+          navigate(`/login`);
         }
         setLoading(false);
       } else {

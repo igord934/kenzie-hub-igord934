@@ -1,23 +1,23 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  padding: 10vh 0;
-  background-color: grey;
+export const Header = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 90%;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  gap: 22px;
-  background-color: var(--grey-4);
+  max-width: 369px;
+  padding: 14px 20px;
   box-sizing: border-box;
-  .header {
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 369px;
+  background-color: var(--grey-2);
+  border-radius: 4px 4px 0 0;
+  button {
+    background-color: var(--grey-2);
+    color: var(--grey-1);
+    border-style: none;
+    cursor: pointer;
   }
 `;
+
 export const Form = styled.form`
   background-color: var(--grey-3);
   width: 90%;
@@ -25,10 +25,10 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 42px 16px;
+  padding: 24px 16px;
   box-sizing: border-box;
   gap: 22px;
-  border-radius: 4px;
+  border-radius: 0 0 4px 4px;
   h2 {
     color: var(--grey-0);
   }
