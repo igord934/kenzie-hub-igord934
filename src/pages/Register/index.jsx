@@ -40,9 +40,6 @@ function Register({ navigate, toast }) {
         toast.success(
           "Você se registrou, estamos te redirecionando para o login!"
         );
-        setTimeout(() => {
-          setFilter("login");
-        }, 3000);
       })
       .catch((err) => toast.error(err.response.data.message));
   };

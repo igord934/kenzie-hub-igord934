@@ -20,14 +20,6 @@ function Home() {
     setUser(null);
   }
 
-  function creatTech(dataForm) {
-    try {
-      Api.post("/users/techs", dataForm);
-    } catch ({ message }) {
-      toast.error(message);
-    }
-  }
-
   if (loading) {
     return <Loading />;
   }
