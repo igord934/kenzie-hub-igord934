@@ -1,18 +1,16 @@
-import { useContext, useState } from "react";
-import { toast } from "react-toastify";
+import { useContext } from "react";
 import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
 import Techs from "../../components/Techs";
 import { TechContext } from "../../context/TechContext";
 import { UserContext } from "../../context/UserContext";
-import Api from "../../services/Api";
 import { Button } from "../../style/Button";
 import { Headline, Logo, Title } from "../../style/Typograph";
 import { Container } from "./style";
 
 function Home() {
   const { user, setUser, loading } = useContext(UserContext);
-  const { techs, showModal, setShowModal } = useContext(TechContext);
+  const { techs, setShowModal } = useContext(TechContext);
 
   function logout() {
     window.localStorage.removeItem("@TOKEN");
@@ -27,7 +25,7 @@ function Home() {
   return (
     user && (
       <Container>
-        <Modal creatTech={creatTech} />
+        <Modal />
         <div className="header">
           <Logo>Kenzie Hub</Logo>
           <Button typeName="darkGrey" onClick={logout}>

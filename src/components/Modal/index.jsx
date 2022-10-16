@@ -1,6 +1,4 @@
-import { Button } from "../../style/Button";
-import { Title } from "../../style/Typograph";
-import { Container, Form } from "./styled";
+import { Container } from "./styled";
 import FormCadastrar from "../FormCadastrar";
 import { TechContext } from "../../context/TechContext";
 import { useContext } from "react";
