@@ -3,8 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -25,15 +24,9 @@ function App() {
         theme="dark"
       />
       <Routes>
-        <Route path="/" element={<Home navigate={navigate} toast={toast} />} />
-        <Route
-          path="/login"
-          element={<Login navigate={navigate} toast={toast} />}
-        />
-        <Route
-          path="/register"
-          element={<Register navigate={navigate} toast={toast} />}
-        />
+        <Route path="/" element={<Home navigate={navigate} />} />
+        <Route path="/login" element={<Login navigate={navigate} />} />
+        <Route path="/register" element={<Register navigate={navigate} />} />
       </Routes>
     </div>
   );

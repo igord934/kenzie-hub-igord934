@@ -2,11 +2,14 @@ import { Container, Form } from "./style";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Api from "../../services/Api";
 import { Button, LinkButton as Link } from "../../style/Button";
 import { Logo, Title } from "../../style/Typograph";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
-function Register({ navigate, toast }) {
+function Register() {
+  const { apiRegister } = useContext(UserContext);
+
   const formSchema = yup.object().shape({
     email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
     password: yup
@@ -32,16 +35,8 @@ function Register({ navigate, toast }) {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitFunction = (data) => {
-    delete data.confirmPassword;
-    Api.post("/users", data)
-      .then((resp) => resp.data)
-      .then(() => {
-        toast.success(
-          "Você se registrou, estamos te redirecionando para o login!"
-        );
-      })
-      .catch((err) => toast.error(err.response.data.message));
+  const onSubmitFunction = async (dataForm) => {
+    await apiRegister(dataForm);
   };
 
   function objetoVazio(obj) {

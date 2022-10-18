@@ -35,6 +35,31 @@ export function UserProvider({ children }) {
     getUser();
   }, [user, loading]);
 
+  const apiLogin = async (dataForm) => {
+    try {
+      const { data } = await Api.post("/sessions", dataForm);
+      toast.success("Login realizado com sucesso!");
+
+      window.localStorage.setItem("@TOKEN", data.token);
+      window.localStorage.setItem("@USERID", data.user.id);
+
+      setLoading(true);
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+
+  const apiRegister = async (dataForm) => {
+    try {
+      delete dataForm.confirmPassword;
+      await Api.post("/users", dataForm);
+      toast.success(
+        "Você se registrou, estamos te redirecionando para o login!"
+      );
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
   if (loading) {
     return <Loading />;
   }
@@ -46,6 +71,8 @@ export function UserProvider({ children }) {
         setUser,
         loading,
         setLoading,
+        apiLogin,
+        apiRegister,
       }}
     >
       {children}

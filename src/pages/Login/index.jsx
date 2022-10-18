@@ -4,16 +4,15 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Api from "../../services/Api";
 import { Button, LinkButton as Link } from "../../style/Button";
 import { Logo, Headline, Title } from "../../style/Typograph";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../components/Loading";
 
-function Login({ toast }) {
+function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { loading, setLoading } = useContext(UserContext);
+  const { loading, apiLogin } = useContext(UserContext);
 
   const formSchema = yup.object().shape({
     email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
@@ -29,18 +28,7 @@ function Login({ toast }) {
   });
 
   const onSubmitFunction = async (dataForm) => {
-    try {
-      const { data } = await Api.post("/sessions", dataForm);
-
-      toast.success("Login realizado com sucesso!");
-
-      window.localStorage.setItem("@TOKEN", data.token);
-      window.localStorage.setItem("@USERID", data.user.id);
-
-      setLoading(true);
-    } catch (err) {
-      toast.error(err.response.data.message);
-    }
+    await apiLogin(dataForm);
   };
   if (loading) {
     return <Loading />;
