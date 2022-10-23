@@ -56,6 +56,7 @@ export function UserProvider({ children }) {
       toast.success(
         "Você se registrou, estamos te redirecionando para o login!"
       );
+      navigate("/login");
     } catch (err) {
       toast.error(err.response.data.message);
     }
