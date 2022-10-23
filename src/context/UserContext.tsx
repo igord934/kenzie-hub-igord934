@@ -112,7 +112,6 @@ export function UserProvider({ children }: iUserProviderProps) {
       window.localStorage.setItem("@TOKEN", data.token);
       window.localStorage.setItem("@USERID", data.user.id);
       setLoading(true);
-      // navigate("/");
     } catch (err: any) {
       console.log(err);
       toast.error(err.response.data.message);

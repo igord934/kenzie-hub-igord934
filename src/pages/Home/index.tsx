@@ -15,7 +15,7 @@ function Home() {
   function logout() {
     window.localStorage.removeItem("@TOKEN");
     window.localStorage.removeItem("@USERID");
-    deleteUser;
+    deleteUser();
   }
 
   if (loading) {
