@@ -53,15 +53,5 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* div {
-      width: 90%;
-      padding: 35px 0;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-      max-width: 1200px;
-      box-sizing: border-box;
-      display: flex;
-    } */
   }
 `;

@@ -7,9 +7,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { TechContext } from "../../context/TechContext";
 
+interface iFormTech {
+  title: string;
+  status: string;
+}
+
 function FormEditar() {
-  const { setShowModal, editTech, deletTech, techEdit, setTechEdit } =
-    useContext(TechContext);
+  const { closeModal, editTech, deletTech, techEdit } = useContext(TechContext);
 
   const [valueStatus, setValueStatus] = useState("Iniciante");
 
@@ -23,26 +27,21 @@ function FormEditar() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<iFormTech>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitFunction = async (dataForm) => {
-    editTech(techEdit.id, dataForm);
-    reset();
+  const onSubmitFunction = (dataForm: iFormTech) => {
+    if (techEdit !== null) {
+      editTech(techEdit.id, dataForm);
+      reset();
+    }
   };
   return (
     <>
       <Header>
         <Title typeName="small">Edite sua tech</Title>
-        <button
-          onClick={() => {
-            setShowModal(false);
-            setTechEdit(null);
-          }}
-        >
-          X
-        </button>
+        <button onClick={closeModal}>X</button>
       </Header>
       <Form onSubmit={handleSubmit(onSubmitFunction)}>
         <label>
@@ -50,8 +49,8 @@ function FormEditar() {
           <div className="containerForm">
             <input
               type="text"
-              placeholder={techEdit.title}
-              value={techEdit.title}
+              placeholder={techEdit?.title}
+              value={techEdit?.title}
               {...register("title")}
             />
           </div>
@@ -60,7 +59,6 @@ function FormEditar() {
           <span>Selecionar status</span>
           <div className="containerForm">
             <select
-              name="status"
               {...register("status")}
               onChange={(event) => setValueStatus(event.target.value)}
             >
@@ -73,14 +71,18 @@ function FormEditar() {
         </label>
         <div className="buttons">
           <Button
-            typeName={valueStatus !== techEdit.status ? "primary" : "negative"}
-            disabled={valueStatus === techEdit.status}
+            typeName={valueStatus !== techEdit?.status ? "primary" : "negative"}
+            disabled={valueStatus === techEdit?.status}
           >
             Salvar Alterações
           </Button>
           <Button
             type="button"
-            onClick={() => deletTech(techEdit.id)}
+            onClick={() => {
+              if (techEdit !== null) {
+                deletTech(techEdit.id);
+              }
+            }}
             typeName="grey"
           >
             Excluir

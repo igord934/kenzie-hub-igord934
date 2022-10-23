@@ -9,13 +9,13 @@ import { Headline, Logo, Title } from "../../style/Typograph";
 import { Container } from "./style";
 
 function Home() {
-  const { user, setUser, loading } = useContext(UserContext);
-  const { techs, setShowModal } = useContext(TechContext);
+  const { user, deleteUser, loading } = useContext(UserContext);
+  const { techs } = useContext(TechContext);
 
   function logout() {
     window.localStorage.removeItem("@TOKEN");
     window.localStorage.removeItem("@USERID");
-    setUser(null);
+    deleteUser;
   }
 
   if (loading) {
@@ -38,7 +38,7 @@ function Home() {
             <Headline>{user.course_module}</Headline>
           </div>
         </div>
-        <Techs techs={techs} setShowModal={setShowModal}></Techs>
+        <Techs techs={techs}></Techs>
       </Container>
     )
   );

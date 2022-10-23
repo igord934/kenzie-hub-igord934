@@ -7,8 +7,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { TechContext } from "../../context/TechContext";
 
+interface iFormCreat {
+  title: string;
+  status: string;
+}
+
 function FormCadastrar() {
-  const { setShowModal, creatTech } = useContext(TechContext);
+  const { closeModal, creatTech } = useContext(TechContext);
 
   const formSchema = yup.object().shape({
     title: yup.string().required("Nome é obrigatório"),
@@ -20,11 +25,11 @@ function FormCadastrar() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<iFormCreat>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitFunction = async (dataForm) => {
+  const onSubmitFunction = async (dataForm: iFormCreat) => {
     creatTech(dataForm);
     reset();
   };
@@ -32,7 +37,7 @@ function FormCadastrar() {
     <>
       <Header>
         <Title typeName="small">Cria sua tech</Title>
-        <button onClick={() => setShowModal(false)}>X</button>
+        <button onClick={closeModal}>X</button>
       </Header>
       <Form onSubmit={handleSubmit(onSubmitFunction)}>
         <label>
@@ -44,7 +49,6 @@ function FormCadastrar() {
               {...register("title")}
             />
           </div>
-          <p>{errors.title?.message}</p>
         </label>
         <label>
           <span>Selecionar status</span>
@@ -55,7 +59,6 @@ function FormCadastrar() {
               <option value="Avançado">Avançado</option>
             </select>
           </div>
-          <p>{errors.status?.message}</p>
         </label>
         <Button typeName="primary">Cadastrar Tecnologia</Button>
       </Form>

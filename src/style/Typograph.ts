@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+interface iPropsTypograph {
+  typeName?: string;
+}
+
 export const Logo = styled.h1`
   font-size: 1.5rem;
   color: var(--primary);
@@ -9,7 +13,7 @@ export const Logo = styled.h1`
 export const Title = styled.h2`
   font-size: 1rem;
   font-weight: 600;
-  ${(props) => {
+  ${(props: iPropsTypograph) => {
     if (props.typeName === "big") {
       return css`
         font-size: 1.125rem;
@@ -27,7 +31,7 @@ export const Title = styled.h2`
 export const Headline = styled.span`
   font-size: 0.75rem;
   font-weight: 400;
-  ${(props) => {
+  ${(props: iPropsTypograph) => {
     if (props.typeName === "bold") {
       return css`
         font-weight: 600;

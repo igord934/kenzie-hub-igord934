@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+interface iPropsButton {
+  typeName?: string;
+}
+
 export const Button = styled.button`
   border-style: none;
   font-size: 0.875rem;
@@ -10,7 +14,7 @@ export const Button = styled.button`
   cursor: pointer;
   transition: 0.5s;
 
-  ${(props) => {
+  ${(props: iPropsButton) => {
     if (props.typeName == "primary") {
       return css`
         background-color: var(--primary);
@@ -50,6 +54,7 @@ export const LinkButton = styled(Link)`
   padding: 11px 22px;
   color: var(--text-color);
   cursor: pointer;
+  transition: 0.3s;
   background-color: var(--grey-1);
   &:hover {
     background-color: var(--grey-2);
@@ -67,32 +72,10 @@ export const AddButton = styled.button`
   width: 32px;
   color: var(--text-color);
   cursor: pointer;
+  transition: 0.5s;
+
   background-color: var(--grey-3);
   &:hover {
     background-color: var(--grey-2);
   }
 `;
-// .button {
-
-//   }
-//   .button.primary {
-//     background-color: var(--primary);
-//   }
-//   .button.primary:hover {
-//     background-color: var(--primary-focus);
-//   }
-//   .button.negative {
-//     background-color: var(--primary-negative);
-//   }
-//   .button.Grey {
-//     background-color: var(--grey-1);
-//   }
-//   .button.Grey:hover {
-//     background-color: var(--grey-2);
-//   }
-//   .button.darkGrey {
-//     background-color: var(--grey-3);
-//   }
-//   .button.darkGrey:hover {
-//     background-color: var(--grey-2);
-//   }

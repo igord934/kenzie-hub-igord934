@@ -4,13 +4,25 @@ import { AddButton } from "../../style/Button";
 import { Headline, Title } from "../../style/Typograph";
 import { Container } from "./styled";
 
-function Techs({ techs }) {
-  const { setShowModal, setTechEdit } = useContext(TechContext);
+interface iTech {
+  id: string;
+  title: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface iTechs {
+  techs: iTech[];
+}
+
+function Techs({ techs }: iTechs) {
+  const { openModal, openModalEdit } = useContext(TechContext);
   return (
     <Container>
       <div className="header">
         <Title>Tecnologias</Title>
-        <AddButton onClick={() => setShowModal(true)}>+</AddButton>
+        <AddButton onClick={openModal}>+</AddButton>
       </div>
       {techs.length > 0 ? (
         <ul>
@@ -19,8 +31,7 @@ function Techs({ techs }) {
               <li
                 key={tech.id}
                 onClick={() => {
-                  setTechEdit(tech);
-                  setShowModal(true);
+                  openModalEdit(tech);
                 }}
               >
                 <Title typeName="small">{tech.title}</Title>

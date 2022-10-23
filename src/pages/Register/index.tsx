@@ -1,11 +1,21 @@
 import { Container, Form } from "./style";
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
+import { FieldValue, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, LinkButton as Link } from "../../style/Button";
 import { Logo, Title } from "../../style/Typograph";
 import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
+
+interface iFormRegister {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
 
 function Register() {
   const { apiRegister } = useContext(UserContext);
@@ -20,7 +30,7 @@ function Register() {
       .matches(/(\d)/, "Deve conter ao menos um numero")
       .matches(/(\W)|_/, "Deve conter ao menos um carcter especial")
       .matches(/.{6,}/, "Deve conter no minimo 6 digitos"),
-    confrmPassword: yup.string().oneOf([yup.ref("password")]),
+    confirmPassword: yup.string().oneOf([yup.ref("password")]),
     name: yup.string().required("Nome é obrigatório"),
     bio: yup.string().required("Bio é obrigatório"),
     contact: yup.string().required("Contato é obrigatório"),
@@ -31,15 +41,15 @@ function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iFormRegister>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitFunction = async (dataForm) => {
+  const onSubmitFunction = async (dataForm: iFormRegister) => {
     await apiRegister(dataForm);
   };
 
-  function objetoVazio(obj) {
+  function objetoVazio(obj: object) {
     for (var prop in obj) {
       if (obj.hasOwnProperty(prop)) return false;
     }
@@ -96,7 +106,7 @@ function Register() {
               {...register("name")}
             />
           </div>
-          <p>{errors.nome?.message}</p>
+          <p>{errors.name?.message}</p>
         </label>
         <label>
           <span>Bio</span>

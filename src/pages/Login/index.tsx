@@ -9,6 +9,11 @@ import { Logo, Headline, Title } from "../../style/Typograph";
 import { UserContext } from "../../context/UserContext";
 import Loading from "../../components/Loading";
 
+interface iFormLogin {
+  email: string;
+  password: string;
+}
+
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,13 +28,14 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iFormLogin>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitFunction = async (dataForm) => {
+  const onSubmitFunction = async (dataForm: iFormLogin) => {
     await apiLogin(dataForm);
   };
+
   if (loading) {
     return <Loading />;
   }
