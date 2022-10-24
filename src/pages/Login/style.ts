@@ -30,6 +30,10 @@ export const Form = styled.form`
     width: 100%;
     font-size: 0.75rem;
     color: var(--grey-0);
+    p {
+      color: var(--negative);
+      padding-top: 2px;
+    }
   }
   .containerForm {
     position: relative;

@@ -30,7 +30,9 @@ function Register() {
       .matches(/(\d)/, "Deve conter ao menos um numero")
       .matches(/(\W)|_/, "Deve conter ao menos um carcter especial")
       .matches(/.{6,}/, "Deve conter no minimo 6 digitos"),
-    confirmPassword: yup.string().oneOf([yup.ref("password")]),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password")], "As senhas estão diferentes"),
     name: yup.string().required("Nome é obrigatório"),
     bio: yup.string().required("Bio é obrigatório"),
     contact: yup.string().required("Contato é obrigatório"),

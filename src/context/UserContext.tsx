@@ -8,6 +8,14 @@ interface iUserProviderProps {
   children: ReactNode;
 }
 
+interface iErro {
+  response: {
+    data: {
+      message: string;
+    };
+  };
+}
+
 interface iTechApi {
   id: string;
   title: string;
@@ -112,9 +120,8 @@ export function UserProvider({ children }: iUserProviderProps) {
       window.localStorage.setItem("@TOKEN", data.token);
       window.localStorage.setItem("@USERID", data.user.id);
       setLoading(true);
-    } catch (err: any) {
-      console.log(err);
-      toast.error(err.response.data.message);
+    } catch (err) {
+      toast.error((err as iErro).response.data.message);
     }
   }
 
@@ -125,8 +132,8 @@ export function UserProvider({ children }: iUserProviderProps) {
         "Você se registrou, estamos te redirecionando para o login!"
       );
       navigate("/login");
-    } catch (err: any) {
-      toast.error(err.response.data.message);
+    } catch (err) {
+      toast.error((err as iErro).response.data.message);
     }
   }
   if (loading) {
