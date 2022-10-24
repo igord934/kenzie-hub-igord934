@@ -15,7 +15,7 @@ interface iFormTech {
 function FormEditar() {
   const { closeModal, editTech, deletTech, techEdit } = useContext(TechContext);
 
-  const [valueStatus, setValueStatus] = useState("Iniciante");
+  const [valueStatus, setValueStatus] = useState<string>("Iniciante");
 
   const formSchema = yup.object().shape({
     title: yup.string(),
