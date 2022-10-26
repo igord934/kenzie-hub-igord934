@@ -77,6 +77,7 @@ interface iUserContext {
   deleteUser(): void;
   apiLogin(dataForm: iFormLogin): Promise<void>;
   apiRegister(dataForm: iFormRegister): Promise<void>;
+  loadingTechs(): void;
 }
 
 export const UserContext = createContext<iUserContext>({} as iUserContext);
@@ -108,11 +109,16 @@ export function UserProvider({ children }: iUserProviderProps) {
     }
     setLoading(false);
     getUser();
-  }, [user, loading]);
+  }, [loading]);
 
   function deleteUser(): void {
     setUser(null);
   }
+
+  function loadingTechs(): void {
+    setLoading(true);
+  }
+
   async function apiLogin(dataForm: iFormLogin): Promise<void> {
     try {
       const { data }: iResponseLoginApi = await Api.post("/sessions", dataForm);
@@ -148,6 +154,7 @@ export function UserProvider({ children }: iUserProviderProps) {
         deleteUser,
         apiLogin,
         apiRegister,
+        loadingTechs,
       }}
     >
       {children}

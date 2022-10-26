@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import Loading from "../components/Loading";
 import Api from "../services/Api";
 import { UserContext } from "./UserContext";
 
@@ -40,31 +41,29 @@ interface iTechProvider {
 export const TechContext = createContext<iTechProvider>({} as iTechProvider);
 
 export function TechProvider({ children }: iTechProviderProps) {
-  const { user } = useContext(UserContext);
+  const { loading, user, loadingTechs } = useContext(UserContext);
   const [techs, setTechs] = useState<iTechApi[]>([]);
   const [techEdit, setTechEdit] = useState<iTechApi | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   function creatTech(dataForm: iFormTech): void {
     Api.post("/users/techs", dataForm);
-    setShowModal(false);
-    setTechEdit(null);
+    closeModal();
   }
 
   function deletTech(id: string): void {
     Api.delete(`/users/techs/${id}`);
-    setShowModal(false);
-    setTechEdit(null);
+    closeModal();
   }
   function editTech(id: string, dataForm: iFormTech): void {
     Api.put(`/users/techs/${id}`, dataForm);
-    setShowModal(false);
-    setTechEdit(null);
+    closeModal();
   }
 
   function closeModal(): void {
     setShowModal(false);
     setTechEdit(null);
+    loadingTechs();
   }
 
   function openModal(): void {
@@ -81,6 +80,9 @@ export function TechProvider({ children }: iTechProviderProps) {
       setTechs(user.techs);
     }
   }, [user]);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <TechContext.Provider
       value={{
