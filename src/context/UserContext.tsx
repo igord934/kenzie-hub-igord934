@@ -113,6 +113,7 @@ export function UserProvider({ children }: iUserProviderProps) {
 
   function deleteUser(): void {
     setUser(null);
+    setLoading(true);
   }
 
   function loadingTechs(): void {
